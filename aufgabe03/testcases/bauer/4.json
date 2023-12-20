@@ -1,0 +1,24 @@
+{
+    "action": "gcm-recover",
+    "nonce": "btGK/jKaItHKhipr",
+    "msg1": {
+        "ciphertext": "8Qm8mvJdL+FOhR3fh7k+3e0t77xmeFm0Blri6J+R27tkLRyoujiA",
+        "associated_data": "OGWpFpei",
+        "auth_tag": "r7KivUvHXCbItLazKtCM4w=="
+    },
+    "msg2": {
+        "ciphertext": "x1pP5jylEiVIv3mwarOICks=",
+        "associated_data": "xFIl2iW0jrhicx28Sg==",
+        "auth_tag": "S/RpxPtaYrWraWCLVoTvvg=="
+    },
+    "msg3": {
+        "ciphertext": "i+rzm9ovguPzhqDhDHV89n+7Mui7AN1n4QasCVuTwgCuQ3R+WAfx",
+        "associated_data": "j9tFxxiKO5oHYtw6NSvq",
+        "auth_tag": "Y8FBlgG/Josn/zAERIqIbw=="
+    },
+    "msg4": {
+        "ciphertext": "GjevRgPxdw+Z0QA1uw==",
+        "associated_data": "Fb4="
+    },
+    "_test_result": "{\"msg4_tag\": \"7DlQmG9x0DFhLXLmCmzkTQ==\"}"
+}

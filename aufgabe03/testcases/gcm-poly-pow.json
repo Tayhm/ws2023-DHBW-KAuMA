@@ -1,0 +1,10 @@
+{
+    "action": "gcm-poly-pow",
+    "base": [
+    "BAAAAAAAAAAAAAAAAAAAAA==",
+    "AgAAAAAAAAAAAAAAAAAAAA==",
+    "AcAAAAAAAAAAAAAAAAAAAA=="
+    ],
+    "exponent": 3,
+    "_test_result": "{\"result\": [\"AAEAAAAAAAAAAAAAAAAAAA==\", \"AACAAAAAAAAAAAAAAAAAAA==\", \"AAAwAAAAAAAAAAAAAAAAAA==\", \"AAAgAAAAAAAAAAAAAAAAAA==\", \"AAAJAAAAAAAAAAAAAAAAAA==\", \"AAAKgAAAAAAAAAAAAAAAAA==\", \"AAAGsAAAAAAAAAAAAAAAAA==\"]}"
+}

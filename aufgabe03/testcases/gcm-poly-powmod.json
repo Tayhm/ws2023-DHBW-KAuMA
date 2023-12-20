@@ -1,0 +1,15 @@
+{
+    "action": "gcm-poly-powmod",
+    "base": [
+    "BAAAAAAAAAAAAAAAAAAAAA==",
+    "AgAAAAAAAAAAAAAAAAAAAA==",
+    "AcAAAAAAAAAAAAAAAAAAAA=="
+    ],
+    "exponent": 1000000,
+    "modulo": [
+    "JGAAAAAAAAAAAAAAAAAAAA==",
+    "AAgAAAAAAAAAAAAAAAAAAA==",
+    "EUAAAAAAAAAAAAAAAAAAAA=="
+    ],
+    "_test_result": "{\"result\": [\"MsGegcpw1DgpcRIVrFtD0w==\", \"KAqoMEtc+VfvBzZCRioQNQ==\"]}"
+}

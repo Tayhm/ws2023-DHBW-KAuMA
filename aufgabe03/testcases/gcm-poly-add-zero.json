@@ -1,0 +1,14 @@
+{
+    "action": "gcm-poly-add",
+    "a": [
+    "BAAAAAAAAAAAAAAAAAAAAA==",
+    "AgAAAAAAAAAAAAAAAAAAAA==",
+    "AcAAAAAAAAAAAAAAAAAAAA=="
+    ],
+    "b": [
+    "BAAAAAAAAAAAAAAAAAAAAA==",
+    "AgAAAAAAAAAAAAAAAAAAAA==",
+    "AcAAAAAAAAAAAAAAAAAAAA=="
+    ],
+    "_test_result": "{\"result\": []}"
+}

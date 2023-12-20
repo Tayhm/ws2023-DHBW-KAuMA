@@ -1,0 +1,5 @@
+{ "action": "padding-oracle-attack", "hostname": "localhost", "port": 1234, "iv": "MDk4NzY1NDMyMXF3ZXJ0eg==", "ciphertext": "85bYLa/8ysZ7wxKm5JSyOA==",
+ "_test_result": "{\"plaintext\": \"c2VjcmV0X21lc3NhZ2UxMg==\"}",
+ "_key": "MTIzNDU2Nzg5MGFiY2RlZg==",
+ "_comment": "Selbstgemachter testcase, um gegen den eigenen server das Paddingorakel zu testen"
+}

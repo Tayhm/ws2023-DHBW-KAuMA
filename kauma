@@ -1,0 +1,100 @@
+#!/usr/bin/python3
+import base64
+import json
+import sys
+from aufgabe01 import bytenigma
+from aufgabe02 import poracle_client
+from aufgabe03 import galois_arithmetics
+from aufgabe03 import gcm
+from aufgabe03 import cantor_zassenhaus
+
+def aufgabe03_decode_msg(msg: dict):
+    for key, value in msg.items():
+        msg[key] = base64.b64decode(value)
+
+    return msg
+
+def run_assignment(json_content):
+    match json_content["action"]:
+
+        case "bytenigma":
+            return {"output": base64.b64encode(bytenigma.run_bytenigma(json_content["rotors"], base64.b64decode(json_content["input"]))).decode()}
+
+        case "padding-oracle-attack":
+            return {"plaintext": base64.b64encode(poracle_client.attack_poracle(json_content["hostname"], json_content["port"], base64.b64decode(json_content["iv"]), base64.b64decode(json_content["ciphertext"]))).decode()}
+
+        case "gcm-block2poly":
+            return {"exponents": galois_arithmetics.Polynomial.block2poly(base64.b64decode(json_content["block"]))}
+
+        case "gcm-poly2block":
+            return {"block": base64.b64encode(galois_arithmetics.Polynomial.poly2block(json_content["exponents"])).decode()}
+
+        case "gcm-clmul":
+            return {"a_times_b": base64.b64encode((galois_arithmetics.Polynomial.from_bytes(base64.b64decode(json_content["a"])) * galois_arithmetics.Polynomial.from_bytes(base64.b64decode(json_content["b"]))).to_bytes()).decode()}
+
+        case "gcm-encrypt":
+            result = gcm.encrypt(base64.b64decode(json_content["key"]), base64.b64decode(json_content["nonce"]), base64.b64decode(json_content["associated_data"]), base64.b64decode(json_content["plaintext"]))
+            return {"ciphertext": base64.b64encode(result[0]).decode(), "auth_tag": base64.b64encode(result[1]).decode(), "Y0": base64.b64encode(result[2]).decode(), "H": base64.b64encode(result[3]).decode()} 
+
+        case "gcm-poly-add":
+            return {"result": [base64.b64encode(coefficient.to_bytes()).decode() for coefficient in galois_arithmetics.gcm_poly_add([base64.b64decode(coefficient) for coefficient in json_content["a"]], [base64.b64decode(coefficient) for coefficient in json_content["b"]]).coefficients]}
+
+        case "gcm-poly-mul":
+            return {"result": [base64.b64encode(coefficient.to_bytes()).decode() for coefficient in galois_arithmetics.gcm_poly_mul([base64.b64decode(coefficient) for coefficient in json_content["a"]], [base64.b64decode(coefficient) for coefficient in json_content["b"]]).coefficients]}
+
+        case "gcm-poly-pow":
+            return {"result": [base64.b64encode(coefficient.to_bytes()).decode() for coefficient in galois_arithmetics.gcm_poly_pow([base64.b64decode(coefficient) for coefficient in json_content["base"]], json_content["exponent"]).coefficients]}
+
+        case "gcm-poly-powmod":
+            return {"result": [base64.b64encode(coefficient.to_bytes()).decode() for coefficient in galois_arithmetics.gcm_poly_powmod([base64.b64decode(coefficient) for coefficient in json_content["base"]], json_content["exponent"], [base64.b64decode(coefficient) for coefficient in json_content["modulo"]]).coefficients]}
+
+        case "gcm-poly-div":
+            return {"result": [base64.b64encode(coefficient.to_bytes()).decode() for coefficient in galois_arithmetics.gcm_poly_div([base64.b64decode(coefficient) for coefficient in json_content["a"]], [base64.b64decode(coefficient) for coefficient in json_content["b"]]).coefficients]}
+        
+        case "gcm-poly-gcd":
+            return {"result": [base64.b64encode(coefficient.to_bytes()).decode() for coefficient in galois_arithmetics.gcm_poly_gcd([base64.b64decode(coefficient) for coefficient in json_content["a"]], [base64.b64decode(coefficient) for coefficient in json_content["b"]]).coefficients]}
+        
+        case "gcm-poly-mod":
+            return {"result": [base64.b64encode(coefficient.to_bytes()).decode() for coefficient in galois_arithmetics.gcm_poly_mod([base64.b64decode(coefficient) for coefficient in json_content["a"]], [base64.b64decode(coefficient) for coefficient in json_content["b"]]).coefficients]}
+
+        case "gcm-recover":
+            return {"msg4_tag": base64.b64encode(cantor_zassenhaus.gcm_recover(base64.b64decode(json_content["nonce"]), aufgabe03_decode_msg(json_content["msg1"]), aufgabe03_decode_msg(json_content["msg2"]), aufgabe03_decode_msg(json_content["msg3"]), aufgabe03_decode_msg(json_content["msg4"]))).decode()}
+
+        case _:
+            print("No valid assignment picked", file=sys.stderr)
+            return {"result": None}
+
+
+if __name__ == "__main__":
+
+    json_file = sys.argv[1]
+    json_content = None
+
+    with open(json_file, "r") as file:
+        content = file.read()
+        json_content = json.loads(content)
+    
+    result = run_assignment(json_content)
+
+    output = json.dumps(result)
+
+    if len(sys.argv) == 3 and sys.argv[2] == "--test" and "_test_result" in json_content:
+        is_correct = output == json_content['_test_result']
+        print(f"Passed: {is_correct}", file=sys.stderr)
+
+        if not is_correct:
+            lenght_diff = len(json_content['_test_result']) - len(output)
+            print(f"Length difference of expected result compared to actual result: {lenght_diff}")
+
+            print(json_content['_test_result'])
+            helper_string = ""
+            if lenght_diff == 0:
+                for index, char in enumerate(json_content["_test_result"]):
+                    if char != output[index]:
+                        helper_string += "^"
+                    else:
+                        helper_string += "~"
+
+                print(helper_string)
+
+    print(output)
